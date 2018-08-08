@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Quiz Show</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    
+</head>
+<body>
+      <h2 class ="alert alert-primary"><center>Generic Question and Answers</center></h2>  
+      <center><button type="button" class="start">Start Quiz</button> </center>
+        <!-- Radio Button: <input type="radio" id="myRadio"> -->
+    <div class="jumbotron container" id="questions" >
+           <h3><center><div id="display">Time left: 02:00</div></center></h3>
+           <hr>
+    <div class="row">
+        <div class="col">
+        <div id="question"><h3>Question 1?</h3></div>
+        <form action="">
+                <input type="radio" name="answer" value=1 id="button" class="right"> Right Answer<br>
+                <input type="radio" name="answer" value=1 id="button" class="wrong"> Wrong Answer<br>
+                <input type="radio" name="answer" value=1 id="button" class="wrong"> Other Wrong Answer
+              </form>
+        
+        <div id="question"><h3>Question 2?</h3></div>
+              <form action="">
+                      <input type="radio" name="answer" value=2 id="button" class="right"> Right Answer<br>
+                      <input type="radio" name="answer" value=2 id="button" class="wrong"> Wrong Answer<br>
+                      <input type="radio" name="answer" value=2 id="button" class="wrong"> Other Wrong Answer
+                    </form>
+                            <div id="question"><h3>Question 3?</h3></div>
+              <form action="">
+                      <input type="radio" name="answer" value=3 id="button" class="right"> Right Answer<br>
+                      <input type="radio" name="answer" value=3 id="button" class="wrong"> Wrong Answer<br>
+                      <input type="radio" name="answer" value=3 id="button" class="wrong"> Other Wrong Answer
+                    </form>
+        
+            <div id="question"><h3>Question 4?</h3></div>
+                <form action="">
+                        <input type="radio" name="answer" value=4 id="button" class="right"> Right Answer<br>
+                        <input type="radio" name="answer" value=4 id="button" class="wrong"> Wrong Answer<br>
+                        <input type="radio" name="answer" value=4 id="button" class="wrong"> Other Wrong Answer
+                        </form>
+            </div>
+        <div class="col">
+                <div id="question"><h3>Question 5?</h3></div>
+                <form action="">
+                        <input type="radio" name="answer" value=5 id="button" class="right"> Right Answer<br>
+                        <input type="radio" name="answer" value=5 id="button" class="wrong"> Wrong Answer<br>
+                        <input type="radio" name="answer" value=5 id="button" class="wrong"> Other Wrong Answer
+                        </form>
+            <div id="question"><h3>Question 6?</h3></div>
+                <form action="">
+                        <input type="radio" name="answer" value=6 id="button" class="right"> Right Answer<br>
+                        <input type="radio" name="answer" value=6 id="button" class="wrong"> Wrong Answer<br>
+                        <input type="radio" name="answer" value=6 id="button" class="wrong"> Other Wrong Answer
+                        </form>
+            <div id="question"><h3>Question 7?</h3></div>
+                <form action="">
+                        <input type="radio" name="answer" value=7 id="button" class="right"> Right Answer<br>
+                        <input type="radio" name="answer" value=7 id="button" class="wrong"> Wrong Answer<br>
+                        <input type="radio" name="answer" value=7 id="button" class="wrong"> Other Wrong Answer
+                        </form>
+            <div id="question"><h3>Question 8?</h3></div>
+                <form action="">
+                        <input type="radio" name="answer" value=8 id="button" class="right"> Right Answer<br>
+                        <input type="radio" name="answer" value=8 id="button" class="wrong"> Wrong Answer<br>
+                        <input type="radio" name="answer" value=8 id="button" class="wrong"> Other Wrong Answer
+                        </form>            
+              <br>
+            </div>
+        </div>
+        <hr>
+        <center><input type="submit" class="submit" id="submit"></center>
+    </div>
+    <div class="container jumbotron" id=results>
+        <h3 id="CA">Correct: </h3>
+        <h3 id="WA">Wrong: </h3>
+        <h3 id="UA">Unanswered: </h3>
+    </div>
+    <style>
+    .jumbotron
+    {
+       background-color: white; 
+    }
+    .alert
+    {
+        margin-top: 25px;
+    }
+    </style>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Script -->
+    <script type="text/javascript">
+    var gameStarted =false;
+    var intervalId;
+    var number=90;
+    timeConverter (number);
+    var answers =["ignore",-1,-1,-1,-1,-1,-1,-1,-1];
+    var correctA=0;
+    var wrongA=0;
+    var unA=0;
+    var submitted=false;
+    answers[0]="ignore";
+    $(document).on("click", ".start",function() {
+        StartGame();
+    });
+    $("#questions").hide();
+    $("#results").hide();
+    $(document).on("click", ".right",function() {
+        if(submitted)return;
+        var xX=$(this).attr("value");
+        answers[xX]=1;
+        // console.log(answers)
+    });
+    $(document).on("click", ".wrong",function() {
+        if(submitted)return;
+        var xX=$(this).attr("value");
+        answers[xX]=0;
+        // console.log(answers)
+    });
+    $(document).on("click", ".submit",function() {
+        SubmitIt();
+
+    });
+function StartGame()
+{
+    $(".start").hide();
+    Countdown();
+    $("#questions").show();
+}
+function SubmitIt()
+{
+    for(var i=1;i<answers.length;i++)
+    {
+        if (answers[i]===-1 && number>0)
+        {
+            return;
+        }
+    }
+    if(submitted)return;
+    submitted=true;
+    for(var i=1;i<answers.length;i++)
+        {
+            if(answers[i]===1)
+            {
+                correctA++;
+            }
+            else if (answers[i]===0)
+            {
+                wrongA++;
+            }
+            else unA++;
+            // if(correctA+wrongA)
+        }
+    $( "#questions" ).hide();
+    $("#results").show();
+    $("#CA").append(correctA);
+    $("#WA").append(wrongA);
+     $("#UA").append(unA);
+     $("#display").hide();
+        // console.log(correctA+" "+wrongA+" "+unA)
+}
+function Countdown()
+{
+    intervalId = setInterval(decrement, 1000);
+}
+function decrement() {
+if(number<=0)return;
+      number--;
+      timeConverter(number);
+      //$("#show-number").html("<h2>" + number + "</h2>");
+
+      if (number <= 0) {
+        SubmitIt();
+        clearInterval(intervalId);
+      }
+    }
+function timeConverter (t) {
+
+//  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+var minutes = Math.floor(t / 60);
+var seconds = t - (minutes * 60);
+if (seconds < 10) {
+  seconds = "0" + seconds;
+}
+
+if (minutes === 0) {
+  minutes = "00";
+}
+
+else if (minutes < 10) {
+  minutes = "0" + minutes;
+}
+$("#display").text("Time left: "+minutes+":"+seconds);
+
+return minutes + ":" + seconds;
+}
+
+
+    </script>
+</body>
+</html>

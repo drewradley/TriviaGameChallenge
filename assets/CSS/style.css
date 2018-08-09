@@ -1,0 +1,9 @@
+.jumbotron
+    {
+       background-color: white; 
+    }
+.alert
+    {
+        margin-top: 25px;
+        text-align: center;
+    }

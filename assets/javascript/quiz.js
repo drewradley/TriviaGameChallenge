@@ -18,7 +18,7 @@ $( document ).ready(function() {
         timer: 15
 
     }
-    var questions = [questionA, questionB, questionC]//these are the questions it randomly picks from.
+    var questions = [questionA, questionB, questionC]//these are the questions it randomly picks from. With a large enough question bank, restarting can be easily changed to pick new random questions.
     var questionsAsked =[];//this holds the index of questions[] so we don't ask the same one twice
     var numberAsked=0;//count how many questions have been asked
     // var gameStarted =false;
@@ -138,19 +138,16 @@ function RestartGame()
 {
     $(".result").empty();
     $(".restart").hide();
-     questions = [questionA, questionB, questionC]//these are the questions it randomly picks from.
-     questionsAsked =[];//this holds the index of questions[] so we don't ask the same one twice
-     numberAsked=0;//count how many questions have been asked
-    // var gameStarted =false;
-    //  intervalId;
+     questions = [questionA, questionB, questionC]
+     questionsAsked =[];
+     numberAsked=0;
      number=90;
     timeConverter (number);
-     answers =["ignore",-1,-1,-1];///this is where we store the answers. Manually set this for all questions.
+     answers =["ignore",-1,-1,-1];
      correctA=0;
      wrongA=0;
      unA=0;
      submitted=false;
-    // var myTimeout;
     $(".alert-success").hide();
     $("#questions").hide();
     $("#results").hide();

@@ -196,7 +196,7 @@ function AnswerScreen()
     $( "#questions" ).hide();
     $("#display").hide();
     var thisAnswer=answers[numberAsked];
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=shrug&api_key=dc6zaTOxFJmzC&limit=250";
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=shrug&api_key=dc6zaTOxFJmzC&limit=25";
     if(thisAnswer==-1)
     {
         $(".alert-success").text("Unanswered");

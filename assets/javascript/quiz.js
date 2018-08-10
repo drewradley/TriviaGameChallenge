@@ -31,7 +31,6 @@ $( document ).ready(function() {
     var unA=0;
     var submitted=false;
     var myTimeout;
-    // answers[0]="ignore";
     $(".alert-success").hide();
     $("#questions").hide();
     $("#results").hide();
@@ -41,7 +40,6 @@ $( document ).ready(function() {
     
     $(document).on("click", "#button",function() {
         answers[numberAsked]=this.value;
-        console.log(answers)
     });
     
     $(document).on("click", ".submit",function() {
@@ -50,7 +48,6 @@ $( document ).ready(function() {
             return;
         }
         AnswerScreen();
-        // SubmitIt();
 
     });
 function StartGame()
@@ -122,7 +119,6 @@ function EndGame()
                 wrongA++;
             }
             else unA++;
-            // if(correctA+wrongA)
         }
     $( "#questions" ).hide();
     $("#results").show();
@@ -130,24 +126,13 @@ function EndGame()
     $("#WA").append(wrongA);
     $("#UA").append(unA);
     $("#display").hide();
-        // console.log(correctA+" "+wrongA+" "+unA)
 }
-function SubmitIt()
-{
-    if(answers[numberAsked]===-1)
-    {
-        return;
-    }
-    clearTimeout(myTimeout);
-    clearInterval(intervalId);
-    $(".answer input[type='radio']").prop('checked',false);//clear radio buttons
 
-    nextQuestion();
-    
-}
 function TimedOut()
 {
     $(".alert-success").hide();
+    $('.chicken').empty();
+    $('.chicken').hide();
     clearTimeout(myTimeout);
     clearInterval(intervalId);
     $(".answer input[type='radio']").prop('checked',false);//clear radio buttons
@@ -160,7 +145,7 @@ function Countdown()
     var timeOutTime=number*1000
     myTimeout=  setTimeout(function(){AnswerScreen() }, timeOutTime);
     clearInterval(intervalId);
-    intervalId = setInterval(decrement, 1000); //used to display time left. TODO: Gotta be a better way to keep track or time left in timeout but my google-fu failed me. Right now, timeout and setinterval get out of sync quite easily.
+    intervalId = setInterval(decrement, 1000); //used to display time left.
 }
 function decrement() {//used to display time left. 
 if(number<=0)return;
@@ -174,6 +159,7 @@ if(number<=0)return;
     }
 function AnswerScreen()
 {
+    
     clearTimeout(myTimeout);
     clearInterval(intervalId);
     if(submitted)return;
@@ -182,14 +168,45 @@ function AnswerScreen()
     $( "#questions" ).hide();
     $("#display").hide();
     var thisAnswer=answers[numberAsked];
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=shrug&api_key=dc6zaTOxFJmzC&limit=250";
     if(thisAnswer==-1)
-    $(".alert-success").text("Unanswered");
+    {
+        $(".alert-success").text("Unanswered");
+        queryURL = "http://api.giphy.com/v1/gifs/search?q=shrug&api_key=dc6zaTOxFJmzC&limit=2500";
+        getGIF();
+    }
+    
+    
+    
     if(thisAnswer==0)
-    $(".alert-success").text("Correct");
+    {
+        $(".alert-success").text("Correct");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=correct&api_key=dc6zaTOxFJmzC&limit=2500";
+        getGIF();
+    }
+
     if(thisAnswer>0)
-    $(".alert-success").text("Wrong");
-    // console.log(answers[numberAsked]);
-    myTimeout=  setTimeout(function(){TimedOut() }, 2000);
+    {
+        $(".alert-success").text("Wrong");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=wrong&api_key=dc6zaTOxFJmzC&limit=2500";
+        getGIF();
+    }
+    function getGIF()
+    {
+        $.ajax({
+        url: queryURL,
+        method: "GET"
+        }).then(function(response) {
+            var gifs = response.data;
+            var rG=Math.floor(Math.random()*gifs.length)
+            var img = $('<img>');
+            img.attr('src',gifs[rG].images.fixed_height.url);
+            $('.chicken').empty();
+            $('.chicken').show();
+            $('.chicken').append(img);
+          });
+        }
+    myTimeout=  setTimeout(function(){TimedOut() }, 3000);
 }
 function timeConverter (t) {
 

@@ -200,7 +200,7 @@ function AnswerScreen()
     if(thisAnswer==-1)
     {
         $(".alert-success").text("Unanswered");
-        queryURL = "http://api.giphy.com/v1/gifs/search?q=shrug&api_key=dc6zaTOxFJmzC&limit=2500";
+        queryURL = "http://api.giphy.com/v1/gifs/search?q=shrug&api_key=dc6zaTOxFJmzC&limit=25";
         getGIF();
     }
     
@@ -209,14 +209,14 @@ function AnswerScreen()
     if(thisAnswer==0)
     {
         $(".alert-success").text("Correct");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=correct&api_key=dc6zaTOxFJmzC&limit=2500";
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=correct&api_key=dc6zaTOxFJmzC&limit=25";
         getGIF();
     }
 
     if(thisAnswer>0)
     {
         $(".alert-success").text("Wrong");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=wrong&api_key=dc6zaTOxFJmzC&limit=2500";
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=wrong&api_key=dc6zaTOxFJmzC&limit=25";
         getGIF();
     }
     function getGIF()

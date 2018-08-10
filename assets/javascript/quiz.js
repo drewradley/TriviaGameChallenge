@@ -31,13 +31,16 @@ $( document ).ready(function() {
     var unA=0;
     var submitted=false;
     var myTimeout;
+    $(".restart").hide();
     $(".alert-success").hide();
     $("#questions").hide();
     $("#results").hide();
     $(document).on("click", ".start",function() {
         StartGame();
     });
-    
+    $(document).on("click", ".restart",function() {
+        RestartGame();
+    });
     $(document).on("click", "#button",function() {
         answers[numberAsked]=this.value;
     });
@@ -52,6 +55,7 @@ $( document ).ready(function() {
     });
 function StartGame()
 {
+   
     var xX=Math.floor(Math.random()*questions.length)
     QuestionPicker(xX);
     questionsAsked[numberAsked]=xX;
@@ -107,6 +111,9 @@ function EndGame()
 {
 
     if(submitted)return;
+    $("#results").show();
+    $(".restart").show();
+
     submitted=true;
     for(var i=1;i<answers.length;i++)
         {
@@ -121,13 +128,34 @@ function EndGame()
             else unA++;
         }
     $( "#questions" ).hide();
-    $("#results").show();
-    $("#CA").append(correctA);
-    $("#WA").append(wrongA);
-    $("#UA").append(unA);
+    
+    $("#CA").text("Correct: "+ correctA);
+    $("#WA").text("Wrong: "+wrongA);
+    $("#UA").text("Unanswered: "+unA);
     $("#display").hide();
 }
-
+function RestartGame()
+{
+    $(".result").empty();
+    $(".restart").hide();
+     questions = [questionA, questionB, questionC]//these are the questions it randomly picks from.
+     questionsAsked =[];//this holds the index of questions[] so we don't ask the same one twice
+     numberAsked=0;//count how many questions have been asked
+    // var gameStarted =false;
+    //  intervalId;
+     number=90;
+    timeConverter (number);
+     answers =["ignore",-1,-1,-1];///this is where we store the answers. Manually set this for all questions.
+     correctA=0;
+     wrongA=0;
+     unA=0;
+     submitted=false;
+    // var myTimeout;
+    $(".alert-success").hide();
+    $("#questions").hide();
+    $("#results").hide();
+    StartGame();
+}
 function TimedOut()
 {
     $(".alert-success").hide();

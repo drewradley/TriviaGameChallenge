@@ -96,7 +96,7 @@ function QuestionPicker(q)
     var q3;
     if(q1===0){q2=1;q3=2;}
     if(q1===1){q2=0;q3=2;}
-    if(q1===2){q2=1;q3=0;}
+    if(q1===2){q2=0;q3=1;}
     $(".answerA").text(questions[q].a[q1]);
     $(".buttonA").attr("value", q1);
 
